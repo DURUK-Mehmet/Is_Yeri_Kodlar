@@ -6,13 +6,11 @@ import json
 import pandas as pd
 import requests
 
-for i in range(0,200):
-    data = ""
+for a in range(56,140):
+    mahalle_json_yolu = f"C:/Users/ilker/Desktop/Onikisubat/{a}.json"
+    image_folder = f"D:/kahramanmaraş-onikisubat/kahramanmaraş-onikisubat-foto-{a}"
 
-    ilce_json_yolu = f"C:/Users/ilker/Desktop/elazığ-merkez-mahalleler/{i}.json"
-    image_folder = f"C:/Users/ilker/Desktop/elazığ-merkez-foto/elazığ-merkez-foto-{i}"
-
-    with open(ilce_json_yolu, "r", encoding="utf-8") as f:
+    with open(mahalle_json_yolu, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     for json_verisi in data:
@@ -44,3 +42,28 @@ for i in range(0,200):
 
                 else:
                     print("Fotoğraf Bulunamadı")
+
+    # Müzik dosyasının bulunduğu klasörün yolu
+    klasor_yolu = "C:/Users/ilker/Desktop"
+
+    # Klasördeki tüm dosyaları listele
+    dosyalar = os.listdir(klasor_yolu)
+
+    # Sadece müzik dosyalarını ayıkla (örneğin .mp3, .wav, .ogg uzantılı dosyalar)
+    muzik_dosyalari = [dosya for dosya in dosyalar if
+                       dosya.endswith(".mp3") or dosya.endswith(".wav") or dosya.endswith(".ogg")]
+
+    # İlk müzik dosyasını çal
+    ilk_muzik_dosyasi = muzik_dosyalari[0]
+    os.startfile(os.path.join(klasor_yolu, ilk_muzik_dosyasi))
+
+    # Müzik dosyasının uzunluğunu al
+    muzik_uzunlugu = AudioSegment.from_file(os.path.join(klasor_yolu, ilk_muzik_dosyasi)).duration_seconds * 1000
+
+    # 3 saniye bekle
+    time.sleep(2)
+
+    # Müzik dosyasını durdur
+    os.system("taskkill /im wmplayer.exe /f")
+
+
